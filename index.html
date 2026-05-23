@@ -1108,6 +1108,15 @@ cursor:pointer;
 }
 .cart-send{width:100%;padding:14px;margin-top:12px;background:#25D366;border:none;border-radius:14px;color:#fff;font-size:16px;font-weight:bold;}
 .cart-input{width:100%;padding:12px;margin-top:10px;background:#1a1a1a;border:1px solid #444;border-radius:10px;color:#fff;}
+  @keyframes cartPulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.25);}
+100%{transform:scale(1);}
+}
+
+.cart-alert{
+animation:cartPulse 0.5s ease;
+}      
 </style>
 
 <div id="cartFab">🛒<div id="cartCount">0</div></div>
@@ -1165,11 +1174,29 @@ for(var i=0;i<CART.length;i++){
 if(CART[i].name===name){
 CART[i].qty++;
 updateCart();
+  var fab = document.getElementById("cartFab");
+
+fab.classList.add("cart-alert");
+
+setTimeout(function(){
+
+fab.classList.remove("cart-alert");
+
+},500);      
 return false;
 }
 }
+
 CART.push({name:name,price:price,qty:1});
 updateCart();
+
+var fab = document.getElementById("cartFab");
+fab.classList.add("cart-alert");
+
+setTimeout(function(){
+fab.classList.remove("cart-alert");
+},500);
+
 return false;
 }
 
