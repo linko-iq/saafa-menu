@@ -1058,6 +1058,25 @@
      <!-- ===== SAAFA CART SYSTEM FINAL ===== -->
 
 <style>
+       #orderType{
+font-size:18px!important;
+font-weight:900!important;
+border:2px solid #ffd700!important;
+background:#1a1a1a!important;
+color:#fff!important;
+appearance:auto!important;
+-webkit-appearance:menulist!important;
+cursor:pointer!important;
+}
+
+.order-type-hint{
+color:#ffd700;
+font-size:12px;
+font-weight:900;
+margin-top:8px;
+margin-bottom:8px;
+text-align:right;
+} 
 #cartFab{
 position:fixed;bottom:18px;left:18px;width:65px;height:65px;border-radius:50%;
 background:linear-gradient(135deg,#ffe27a,#ffd700,#8f6b00);
@@ -1091,7 +1110,7 @@ border-top-right-radius:22px;padding:18px;max-height:80vh;overflow:auto;color:#f
 <option value="سفري">سفري</option>
 <option value="صالة">صالة</option>
 </select>
-
+<div class="order-type-hint">⬆️ اضغط هنا لتغيير نوع الطلب</div>
 <input type="text" id="customerInfo" class="cart-input" placeholder="رقم الهاتف">
 <input type="text" id="customerAddress" class="cart-input" placeholder="العنوان للسفري">
 
