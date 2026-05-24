@@ -1236,22 +1236,24 @@ fab.classList.remove("cart-alert");
 function updateCart(){
 var box=document.getElementById("cartItems");
 var count=document.getElementById("cartCount");
+var totalBox=document.getElementById("cartTotal");
 
 if(!box || !count){return;}
 
 box.innerHTML="";
 var total=0;
-var totalPrice=0;       
+var totalPrice=0;
 
 if(CART.length===0){
-box.innerHTML='<div class="cart-empty">'+T("\\u0627\\u0644\\u0633\\u0644\\u0629 \\u0641\\u0627\\u0631\\u063A\\u0629 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B")+'</div>';
+box.innerHTML='<div class="cart-empty">السلة فارغة حالياً</div>';
 }
 
 for(var i=0;i<CART.length;i++){
 total+=CART[i].qty;
+
 var cleanPrice = CART[i].price.replace(/[^\d]/g,"");
 totalPrice += (Number(cleanPrice) || 0) * CART[i].qty;
-        
+
 box.innerHTML += '<div class="cart-item">'+
 '<b>'+CART[i].name+'</b><br>'+
 CART[i].price+'<br><br>'+
@@ -1263,9 +1265,10 @@ CART[i].price+'<br><br>'+
 }
 
 count.innerHTML=total;
-var totalBox=document.getElementById("cartTotal");
+
 if(totalBox){
 totalBox.innerHTML="المجموع الكلي: "+totalPrice.toLocaleString()+" د.ع";
+}
 }
         
 function changeQty(i,n){
