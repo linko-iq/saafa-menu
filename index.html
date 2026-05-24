@@ -1195,7 +1195,10 @@ border-radius:14px;
 <h2 style="margin-bottom:15px;">&#128722; &#1587;&#1604;&#1577; &#1575;&#1604;&#1591;&#1604;&#1576;&#1575;&#1578;</h2>
 
 <div id="cartItems"></div>
-
+<div id="cartTotal" style="margin:14px 0;padding:12px;border:1px solid rgba(255,215,0,.35);border-radius:14px;color:#ffd700;font-weight:900;text-align:center;">
+المجموع الكلي: 0 د.ع
+</div>
+        
 <select id="orderType" class="cart-input" onchange="toggleOrderFields()">
 <option value="delivery">&#128663; &#1587;&#1601;&#1585;&#1610;</option>
 <option value="hall">&#127869;&#65039; &#1589;&#1575;&#1604;&#1577;</option>
@@ -1238,6 +1241,7 @@ if(!box || !count){return;}
 
 box.innerHTML="";
 var total=0;
+var totalPrice=0;       
 
 if(CART.length===0){
 box.innerHTML='<div class="cart-empty">'+T("\\u0627\\u0644\\u0633\\u0644\\u0629 \\u0641\\u0627\\u0631\\u063A\\u0629 \\u062D\\u0627\\u0644\\u064A\\u0627\\u064B")+'</div>';
@@ -1245,7 +1249,9 @@ box.innerHTML='<div class="cart-empty">'+T("\\u0627\\u0644\\u0633\\u0644\\u0629 
 
 for(var i=0;i<CART.length;i++){
 total+=CART[i].qty;
-
+var cleanPrice = CART[i].price.replace(/[^\d]/g,"");
+totalPrice += (Number(cleanPrice) || 0) * CART[i].qty;
+        
 box.innerHTML += '<div class="cart-item">'+
 '<b>'+CART[i].name+'</b><br>'+
 CART[i].price+'<br><br>'+
@@ -1257,8 +1263,11 @@ CART[i].price+'<br><br>'+
 }
 
 count.innerHTML=total;
+var totalBox=document.getElementById("cartTotal");
+if(totalBox){
+totalBox.innerHTML="المجموع الكلي: "+totalPrice.toLocaleString()+" د.ع";
 }
-
+        
 function changeQty(i,n){
 CART[i].qty+=n;
 
