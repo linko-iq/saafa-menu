@@ -986,6 +986,50 @@
 }
 </style>
 
+
+<style>
+/* ===== LINKO PATCH V5: MAP + ADMIN CLEAR + CASHIER NOTICE ===== */
+.linko-admin-only .linko-tabs,
+.linko-admin-only #linkoOrderSearch{display:none!important}
+.linko-admin-only #linkoOrdersList{
+  display:block!important;
+  margin-top:16px!important;
+}
+.linko-admin-clear{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:56px!important;
+  margin:14px 0 0!important;
+  border:1px solid rgba(239,68,68,.72)!important;
+  background:linear-gradient(135deg,#ef4444,#7f1d1d)!important;
+  color:#fff!important;
+  border-radius:18px!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+  box-shadow:0 0 28px rgba(239,68,68,.25)!important;
+}
+.linko-cashier-alert-card{
+  display:none;
+  position:sticky;
+  top:0;
+  z-index:20;
+  margin:0 0 14px;
+  padding:15px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#ffd700,#fff1a8,#9b7500);
+  color:#111;
+  font-weight:900;
+  text-align:center;
+  box-shadow:0 0 34px rgba(255,215,0,.35);
+  animation:cashierAlertPulse 1.2s ease-in-out infinite;
+}
+.linko-cashier-alert-card.show{display:block}
+@keyframes cashierAlertPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+</style>
+
 </head>
 <body>
 <!-- 🎬 الستارة الترحيبية الميكانيكية الرائعة -->
@@ -1603,6 +1647,58 @@ function linkoRenderDashboard(){
   let data=linkoOrders.filter(o=>linkoFilter==='new'?o.status==='new':(o.status==='received'||o.status==='done'));
   if(!data.length){list.innerHTML='<div class="linko-empty">لا توجد طلبات حالياً</div>';return}
   list.innerHTML=data.map(o=>`<div class="linko-row"><div><h3>${o.no} — ${o.type==='takeaway'?'سفري':'صالة'}</h3><small>${o.type==='takeaway'?`الزبون: ${o.customer} | ${o.phone}<br>العنوان: ${o.address}`:`الطاولة: ${o.table}`}</small><small>الحالة: ${linkoStatusLabel(o.status)} | ${o.date}</small><small>${o.items.map(i=>`${i.name} × ${i.qty}`).join(' — ')}</small><div style="color:#ffd700;font-weight:900;margin-top:6px">${linkoMoney(o.total)}</div></div><div class="linko-actions">${o.status==='new'?`<button class="linko-mini blue" onclick="linkoSetStatus(${o.id},'preparing')">قيد التجهيز</button><button class="linko-mini green" onclick="linkoSetStatus(${o.id},'received')">تم الاستلام</button>`:`<button class="linko-mini green">تم الاستلام ✅</button>`}</div></div>`).join('');
+}
+</script>
+
+
+<script>
+/* ===== LINKO PATCH V5 OVERRIDES ===== */
+function linkoPlayNotify(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const notes=[659.25,783.99,987.77,1318.51];
+    notes.forEach((freq,i)=>{
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type='triangle'; o.frequency.value=freq;
+      g.gain.setValueAtTime(0.0001,ctx.currentTime+i*.11);
+      g.gain.exponentialRampToValueAtTime(0.075,ctx.currentTime+i*.11+.025);
+      g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+i*.11+.22);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime+i*.11); o.stop(ctx.currentTime+i*.11+.25);
+    });
+    setTimeout(()=>ctx.close(),900);
+  }catch(e){}
+}
+function linkoShowCashierNotice(){
+  let n=document.getElementById('linkoCashierNotice');
+  if(n){n.classList.add('show');setTimeout(()=>n.classList.remove('show'),2200)}
+  let card=document.getElementById('linkoCashierAlertCard');
+  if(card){card.classList.add('show');setTimeout(()=>card.classList.remove('show'),3500)}
+  linkoPlayNotify();
+}
+function linkoRenderDashboard(){
+  let stats=document.getElementById('linkoAdminStats'), list=document.getElementById('linkoOrdersList'); if(!stats||!list)return;
+  if(linkoDashMode==='admin'){
+    const today=linkoTodayStats(), week=linkoPeriodStats(7), month=linkoPeriodStats(30);
+    stats.innerHTML=`<div class="linko-stat"><small>طلبات اليوم</small><b>${today.count}</b></div><div class="linko-stat"><small>طلبات الأسبوع</small><b>${week.count}</b></div><div class="linko-stat"><small>طلبات الشهر</small><b>${month.count}</b></div><div class="linko-stat"><small>مبيعات اليوم</small><b>${linkoMoney(today.total)}</b></div><div class="linko-stat"><small>مبيعات الأسبوع</small><b>${linkoMoney(week.total)}</b></div><div class="linko-stat"><small>مبيعات الشهر</small><b>${linkoMoney(month.total)}</b></div>`;
+    list.style.display='block';
+    list.innerHTML='<button class="linko-admin-clear" onclick="linkoClearAllData()">🗑️ حذف كل التفاصيل</button>';
+    return;
+  }
+  list.style.display='';
+  let newCount=linkoOrders.filter(o=>o.status==='new').length, receivedCount=linkoOrders.filter(o=>o.status==='received'||o.status==='done').length;
+  stats.innerHTML=`<div class="linko-stat"><small>طلبات جديدة</small><b>${newCount}</b></div><div class="linko-stat"><small>تم الاستلام</small><b>${receivedCount}</b></div><div class="linko-stat"><small>إجمالي الطلبات</small><b>${linkoOrders.length}</b></div><div class="linko-stat"><small>مبيعات</small><b>${linkoMoney(linkoOrders.reduce((s,o)=>s+o.total,0))}</b></div>`;
+  let data=linkoOrders.filter(o=>linkoFilter==='new'?o.status==='new':(o.status==='received'||o.status==='done'));
+  if(!data.length){list.innerHTML='<div id="linkoCashierAlertCard" class="linko-cashier-alert-card">🔔 انتباه: وصل طلب جديد</div><div class="linko-empty">لا توجد طلبات حالياً</div>';return}
+  list.innerHTML='<div id="linkoCashierAlertCard" class="linko-cashier-alert-card">🔔 انتباه: وصل طلب جديد للكاشير</div>'+data.map(o=>`<div class="linko-row"><div><h3>${o.no} — ${o.type==='takeaway'?'سفري':'صالة'}</h3><small>${o.type==='takeaway'?`الزبون: ${o.customer} | ${o.phone}<br>العنوان: ${o.address}`:`الطاولة: ${o.table}`}</small><small>الحالة: ${linkoStatusLabel(o.status)} | ${o.date}</small><small>${o.items.map(i=>`${i.name} × ${i.qty}`).join(' — ')}</small><div style="color:#ffd700;font-weight:900;margin-top:6px">${linkoMoney(o.total)}</div></div><div class="linko-actions">${o.status==='new'?`<button class="linko-mini blue" onclick="linkoSetStatus(${o.id},'preparing')">قيد التجهيز</button><button class="linko-mini green" onclick="linkoSetStatus(${o.id},'received')">تم الاستلام</button>`:`<button class="linko-mini green">تم الاستلام ✅</button>`}</div></div>`).join('');
+}
+function linkoClearAllData(){
+  const code=prompt('لتأكيد حذف كل التفاصيل اكتب رمز الإدارة');
+  if(code!==LINKO_SYSTEM_CODE){alert('رمز غير صحيح، لم يتم الحذف');return}
+  if(!confirm('تأكيد نهائي: حذف كل الطلبات والمبيعات والتفاصيل؟'))return;
+  linkoOrders=[];linkoTrash=[];linkoCart=[];
+  linkoSave();linkoUpdateCount();linkoRenderDashboard();
+  alert('تم حذف كل التفاصيل بنجاح');
 }
 </script>
 
