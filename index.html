@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>مطعم LINKO - نموذج منيو وإدارة LINKO</title>
+<title>مطعم LINKO - نموذج تجريبي للعرض</title>
 <style>
         :root {
             --bronze-color: #cd7f32;
@@ -873,6 +873,40 @@
 @media(max-width:460px){.linko-admin-only #linkoAdminStats{grid-template-columns:1fr!important}}
 </style>
 
+
+<style>
+/* ===== LINKO RESTAURANT ORDER CONFIRM + CASHIER FINAL ===== */
+.linko-order-success{
+  position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.84);padding:16px;text-align:center;color:#fff
+}
+.linko-order-success.show{display:flex}
+.linko-success-card{
+  width:min(560px,96vw);padding:28px 20px;border-radius:26px;border:1px solid rgba(255,215,0,.34);
+  background:radial-gradient(circle at top,rgba(255,215,0,.18),transparent 42%),linear-gradient(180deg,#111,#050505);
+  box-shadow:0 0 55px rgba(0,0,0,.8),0 0 38px rgba(255,215,0,.12);position:relative;overflow:hidden
+}
+.linko-success-icon{width:84px;height:84px;border-radius:50%;margin:0 auto 16px;display:grid;place-items:center;
+  background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.45);font-size:42px;animation:linkoSuccessPulse 1.1s ease-in-out infinite}
+@keyframes linkoSuccessPulse{0%,100%{transform:scale(1);box-shadow:0 0 18px rgba(37,211,102,.18)}50%{transform:scale(1.07);box-shadow:0 0 34px rgba(37,211,102,.36)}}
+.linko-success-card h2{color:#ffd700;font-size:26px;margin-bottom:10px}
+.linko-success-card p{color:#ddd;line-height:1.9;font-size:15px;margin-bottom:14px}
+.linko-success-whatsapp{width:100%;min-height:54px;border:0;border-radius:16px;background:#25D366;color:white;font-weight:900;font-size:16px;cursor:pointer;animation:linkoWaPulse 1.35s ease-in-out infinite}
+@keyframes linkoWaPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.linko-success-close{width:100%;margin-top:10px;min-height:48px;border-radius:16px;border:1px solid rgba(255,215,0,.25);background:#161616;color:white;font-weight:900;cursor:pointer}
+.linko-cashier-notice{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:12000;display:none;
+  width:min(460px,92vw);padding:15px;border-radius:18px;background:linear-gradient(135deg,#ffd700,#9b7500);
+  color:#111;font-weight:900;text-align:center;box-shadow:0 0 42px rgba(255,215,0,.38)}
+.linko-cashier-notice.show{display:block;animation:noticeDrop .35s ease}
+@keyframes noticeDrop{from{opacity:0;transform:translate(-50%,-18px)}to{opacity:1;transform:translate(-50%,0)}}
+#linkoDashboardModal.show{align-items:flex-start!important;justify-content:center!important;background:#050505!important;padding:0!important;overflow:auto!important}
+#linkoDashboardModal.show .linko-panel{width:100%!important;max-width:none!important;min-height:100vh!important;max-height:none!important;border-radius:0!important;border:0!important}
+#linkoDashboardModal .linko-panel-head{border-radius:0!important}
+.linko-dashboard-cashier .linko-tabs{justify-content:center}
+.linko-dashboard-cashier .linko-tab{min-width:150px}
+.linko-admin-clear{margin-top:16px;width:100%;min-height:52px;border:1px solid rgba(239,68,68,.55);background:linear-gradient(135deg,#ef4444,#7f1d1d);color:#fff;border-radius:16px;font-weight:900;cursor:pointer}
+</style>
+
 </head>
 <body>
 <!-- 🎬 الستارة الترحيبية الميكانيكية الرائعة -->
@@ -880,15 +914,15 @@
 <div class="panel-right"></div>
 <div class="welcome-center-box">
 <h2 class="splash-heading">مطعم LINKO</h2>
-<div class="splash-subtext">أصالة شرقية بطعم يليق بكم 🌴✨</div>
+<div class="splash-subtext">نموذج منيو ذكي للعرض داخل LINKO ✨</div>
 </div>
 <div class="panel-left"></div>
 </div>
 <!-- 👑 شريط اسم المطعم الإعلاني العلوي الظاهر والواضح بالكامل - يسحب وينسحب نحو اليمين بشكل مستمر ودائم وبدون انقطاع -->
 <div class="marquee-header-fixed-box">
 <div class="marquee-inner-scroll">
-<div class="marquee-block-content"><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ أشهى النكهات الشرقية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span><span class="ticker-sep">ــــــ</span><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ أشهى النكهات الشرقية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span></div>
-<div class="marquee-block-content"><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ أشهى النكهات الشرقية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span><span class="ticker-sep">ــــــ</span><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ أشهى النكهات الشرقية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span></div>
+<div class="marquee-block-content"><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ تجربة طلب ذكية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span><span class="ticker-sep">ــــــ</span><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ تجربة طلب ذكية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span></div>
+<div class="marquee-block-content"><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ تجربة طلب ذكية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span><span class="ticker-sep">ــــــ</span><span class="ticker-item">🔥 أهلاً بكم في مطعم LINKO 🌴 ✨ تجربة طلب ذكية بانتظاركم ✨ اطلب الآن واستمتع 🔥</span></div>
 </div>
 </div>
 <section class="saafa-brand-card"><div class="saafa-luxury-safe"><img alt="مطعم LINKO" class="saafa-logo" src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20500%20500%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%3E%3Cstop%20stop-color%3D%27%2523FFD978%27/%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%2523D4AF37%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%27500%27%20height%3D%27500%27%20rx%3D%27110%27%20fill%3D%27%2523050505%27/%3E%3Ccircle%20cx%3D%27250%27%20cy%3D%27250%27%20r%3D%27205%27%20fill%3D%27none%27%20stroke%3D%27url%28%2523g%29%27%20stroke-width%3D%2718%27/%3E%3Cpath%20d%3D%27M135%20250c0-63%2051-114%20114-114%2044%200%2082%2025%20101%2062l-55%2025c-9-18-27-30-49-30-31%200-56%2025-56%2057s25%2057%2056%2057c23%200%2042-13%2051-33h-61v-49h128v33c0%2064-49%20111-116%20111-64%200-113-50-113-119z%27%20fill%3D%27url%28%2523g%29%27/%3E%3Ctext%20x%3D%27250%27%20y%3D%27410%27%20text-anchor%3D%27middle%27%20font-family%3D%27Arial%27%20font-size%3D%2758%27%20font-weight%3D%27900%27%20fill%3D%27%2523FFD978%27%3ELINKO%3C/text%3E%3C/svg%3E"/><span class="safe-gold-moon"></span><span class="safe-steam st1"></span><span class="safe-steam st2"></span><span class="safe-steam st3"></span><span class="safe-spark sk1"></span><span class="safe-spark sk2"></span><span class="safe-spark sk3"></span></div>
@@ -1323,6 +1357,111 @@ function linkoRenderDashboard(){
   list.innerHTML=data.map(o=>`<div class="linko-row"><div><h3>${o.no} — ${o.type==='takeaway'?'سفري':'صالة'}</h3><small>${o.type==='takeaway'?`الزبون: ${o.customer} | ${o.phone}<br>العنوان: ${o.address}`:`الطاولة: ${o.table}`}</small><small>الحالة: ${linkoStatusLabel(o.status)} | ${o.date}</small><small>${o.items.map(i=>`${i.name} × ${i.qty}`).join(' — ')}</small><div style="color:#ffd700;font-weight:900;margin-top:6px">${linkoMoney(o.total)}</div></div><div class="linko-actions">${linkoFilter==='trash'?`<button class="linko-mini green" onclick="linkoRestore(${o.id})">استرجاع</button><button class="linko-mini red" onclick="linkoDeleteForever(${o.id})">حذف نهائي</button>`:`<button class="linko-mini blue" onclick="linkoSetStatus(${o.id},'preparing')">قيد التجهيز</button><button class="linko-mini green" onclick="linkoSetStatus(${o.id},'received')">تم الاستلام</button>`}</div></div>`).join('');
 }
 document.addEventListener('DOMContentLoaded',linkoToggleOrderType);
+</script>
+
+
+<div class="linko-order-success" id="linkoOrderSuccessModal">
+  <div class="linko-success-card">
+    <div class="linko-success-icon">✅</div>
+    <h2>تم إرسال الطلب إلى نظام الكاشير</h2>
+    <p>تم حفظ الطلب داخل لوحة الكاشير بنجاح. لطفاً اضغط الزر أدناه لإرسال نسخة الطلب إلى واتساب الإدارة.</p>
+    <button class="linko-success-whatsapp" onclick="linkoSendLastWhatsApp()">📲 إرسال الطلب عبر واتساب الآن</button>
+    <button class="linko-success-close" onclick="linkoCloseOrderSuccess()">الرجوع للمنيو</button>
+  </div>
+</div>
+<div class="linko-cashier-notice" id="linkoCashierNotice">🔔 انتباه: وصل طلب جديد للكاشير</div>
+
+
+<script>
+/* ===== LINKO RESTAURANT ORDER/CASHIER FINAL OVERRIDES ===== */
+let linkoLastWhatsAppMsg='';
+let linkoLastOrderCount=Number(localStorage.getItem('linkoLastCashierSeen')||'0');
+
+function linkoPlayNotify(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(); const g=ctx.createGain();
+    o.type='sine'; o.frequency.value=880; g.gain.value=.08;
+    o.connect(g); g.connect(ctx.destination); o.start();
+    setTimeout(()=>{o.frequency.value=1180},120);
+    setTimeout(()=>{o.stop();ctx.close()},360);
+  }catch(e){}
+}
+function linkoShowCashierNotice(){
+  const n=document.getElementById('linkoCashierNotice');
+  if(!n)return;
+  n.classList.add('show');
+  linkoPlayNotify();
+  setTimeout(()=>n.classList.remove('show'),2000);
+}
+function linkoCloseOrderSuccess(){
+  document.getElementById('linkoOrderSuccessModal')?.classList.remove('show');
+}
+function linkoSendLastWhatsApp(){
+  if(!linkoLastWhatsAppMsg){alert('لا توجد رسالة طلب جاهزة');return}
+  window.open(`https://wa.me/${LINKO_RESTAURANT_WHATSAPP}?text=${encodeURIComponent(linkoLastWhatsAppMsg)}`,'_blank');
+}
+function linkoSubmitOrder(){
+  if(!linkoCart.length){alert('السلة فارغة');return}
+  const type=document.querySelector('input[name="linkoOrderType"]:checked')?.value || 'hall';
+  let table='-', customer='زبون صالة', phone='-', address='-';
+  if(type==='hall'){
+    table=(document.getElementById('linkoTableNumber').value||'').trim();
+    if(!table){alert('رجاءً اكتب رقم الطاولة');document.getElementById('linkoTableNumber').focus();return}
+  }else{
+    customer=(document.getElementById('linkoCustomerName').value||'').trim();
+    phone=(document.getElementById('linkoCustomerPhone').value||'').trim();
+    address=(document.getElementById('linkoCustomerAddress').value||'').trim();
+    if(!customer){alert('رجاءً اكتب اسم الزبون');document.getElementById('linkoCustomerName').focus();return}
+    if(!phone){alert('رجاءً اكتب رقم الهاتف');document.getElementById('linkoCustomerPhone').focus();return}
+    if(!address){alert('رجاءً اكتب العنوان');document.getElementById('linkoCustomerAddress').focus();return}
+  }
+  let order={id:Date.now(),dateMs:Date.now(),no:'LNK-'+String(Date.now()).slice(-6),type:type,customer:customer,phone:phone,address:address,table:table,items:linkoCart.map(x=>({...x})),total:linkoCart.reduce((s,i)=>s+i.price*i.qty,0),status:'new',date:new Date().toLocaleString('ar-IQ')};
+  linkoOrders.unshift(order); linkoCart=[]; linkoSave(); linkoUpdateCount(); linkoRenderCart(); linkoCloseModal('linkoCartModal');
+  ['linkoTableNumber','linkoCustomerName','linkoCustomerPhone','linkoCustomerAddress'].forEach(id=>{let el=document.getElementById(id);if(el)el.value=''});
+  linkoLastWhatsAppMsg=`طلب جديد - مطعم LINKO\n\nرقم الطلب: ${order.no}\nنوع الطلب: ${type==='hall'?'صالة':'سفري'}\n${type==='hall'?`رقم الطاولة: ${order.table}`:`الزبون: ${order.customer}\nالهاتف: ${order.phone}\nالعنوان: ${order.address}`}\n\n${order.items.map(i=>`- ${i.name} × ${i.qty} = ${linkoMoney(i.price*i.qty)}`).join('\n')}\n\nالمجموع: ${linkoMoney(order.total)}\nالتاريخ: ${order.date}`;
+  document.getElementById('linkoOrderSuccessModal')?.classList.add('show');
+  if(document.getElementById('linkoDashboardModal')?.classList.contains('show') && linkoDashMode==='cashier'){linkoShowCashierNotice();linkoRenderDashboard()}
+}
+function linkoCheckLogin(){
+  if(document.getElementById('linkoLoginCode').value!==LINKO_SYSTEM_CODE){alert('رمز غير صحيح');return}
+  document.getElementById('linkoLoginCode').value=''; linkoCloseModal('linkoLoginModal'); linkoDashMode=linkoLoginTarget;
+  linkoFilter=linkoDashMode==='cashier'?'new':'all';
+  document.getElementById('linkoDashTitle').textContent=linkoDashMode==='cashier'?'💵 لوحة الكاشير':'⚙️ إحصائيات الإدارة';
+  const panel=document.querySelector('#linkoDashboardModal .linko-panel');
+  if(panel){panel.classList.toggle('linko-dashboard-cashier',linkoDashMode==='cashier');panel.classList.toggle('linko-admin-only',linkoDashMode==='admin')}
+  const tabs=document.querySelector('#linkoDashboardModal .linko-tabs');
+  if(tabs && linkoDashMode==='cashier'){
+    tabs.innerHTML=`<button class="linko-tab active" onclick="linkoSetFilter('new',this)">طلبات جديدة</button><button class="linko-tab" onclick="linkoSetFilter('done',this)">تم الاستلام</button>`;
+  }
+  document.getElementById('linkoDashboardModal').classList.add('show');
+  linkoRenderDashboard();
+  if(linkoDashMode==='cashier'){
+    const c=linkoOrders.filter(o=>o.status==='new').length;
+    if(c>linkoLastOrderCount){linkoShowCashierNotice()}
+    linkoLastOrderCount=c; localStorage.setItem('linkoLastCashierSeen',String(c));
+  }
+}
+function linkoSetFilter(f,btn){linkoFilter=f;document.querySelectorAll('.linko-tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');linkoRenderDashboard()}
+function linkoRenderDashboard(){
+  let stats=document.getElementById('linkoAdminStats'), list=document.getElementById('linkoOrdersList'); if(!stats||!list)return;
+  if(linkoDashMode==='admin'){
+    const today=linkoTodayStats(), week=linkoPeriodStats(7), month=linkoPeriodStats(30);
+    stats.innerHTML=`<div class="linko-stat"><small>طلبات اليوم</small><b>${today.count}</b></div><div class="linko-stat"><small>طلبات الأسبوع</small><b>${week.count}</b></div><div class="linko-stat"><small>طلبات الشهر</small><b>${month.count}</b></div><div class="linko-stat"><small>مبيعات اليوم</small><b>${linkoMoney(today.total)}</b></div><div class="linko-stat"><small>مبيعات الأسبوع</small><b>${linkoMoney(week.total)}</b></div><div class="linko-stat"><small>مبيعات الشهر</small><b>${linkoMoney(month.total)}</b></div>`;
+    list.innerHTML='<button class="linko-admin-clear" onclick="linkoClearAllData()">حذف كل التفاصيل</button>'; return;
+  }
+  let newCount=linkoOrders.filter(o=>o.status==='new').length, receivedCount=linkoOrders.filter(o=>o.status==='received'||o.status==='done').length;
+  stats.innerHTML=`<div class="linko-stat"><small>طلبات جديدة</small><b>${newCount}</b></div><div class="linko-stat"><small>تم الاستلام</small><b>${receivedCount}</b></div><div class="linko-stat"><small>إجمالي الطلبات</small><b>${linkoOrders.length}</b></div><div class="linko-stat"><small>مبيعات</small><b>${linkoMoney(linkoOrders.reduce((s,o)=>s+o.total,0))}</b></div>`;
+  let data=linkoOrders.filter(o=>linkoFilter==='new'?o.status==='new':(o.status==='received'||o.status==='done'));
+  if(!data.length){list.innerHTML='<div class="linko-empty">لا توجد طلبات حالياً</div>';return}
+  list.innerHTML=data.map(o=>`<div class="linko-row"><div><h3>${o.no} — ${o.type==='takeaway'?'سفري':'صالة'}</h3><small>${o.type==='takeaway'?`الزبون: ${o.customer} | ${o.phone}<br>العنوان: ${o.address}`:`الطاولة: ${o.table}`}</small><small>الحالة: ${linkoStatusLabel(o.status)} | ${o.date}</small><small>${o.items.map(i=>`${i.name} × ${i.qty}`).join(' — ')}</small><div style="color:#ffd700;font-weight:900;margin-top:6px">${linkoMoney(o.total)}</div></div><div class="linko-actions">${o.status==='new'?`<button class="linko-mini blue" onclick="linkoSetStatus(${o.id},'preparing')">قيد التجهيز</button><button class="linko-mini green" onclick="linkoSetStatus(${o.id},'received')">تم الاستلام</button>`:`<button class="linko-mini green">تم الاستلام ✅</button>`}</div></div>`).join('');
+}
+function linkoClearAllData(){
+  const code=prompt('لتأكيد حذف كل التفاصيل اكتب رمز الإدارة');
+  if(code!==LINKO_SYSTEM_CODE){alert('رمز غير صحيح، لم يتم الحذف');return}
+  if(!confirm('تأكيد نهائي: حذف كل الطلبات والمبيعات والتفاصيل؟'))return;
+  linkoOrders=[];linkoTrash=[];linkoCart=[];linkoSave();linkoUpdateCount();linkoRenderDashboard();alert('تم حذف كل التفاصيل بنجاح');
+}
 </script>
 
 </body>
